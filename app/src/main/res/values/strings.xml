@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Regional_Information</string>
+    <string name="ill">Захворіло</string>
+    <string name="hospitalized">Шпиталізовано</string>
+    <string name="dead">Померло</string>
+    <string name="recovered">Одужало</string>
+    <string name="vaccinated">Вакциновано</string>
+    <string name="testingPLR">Тестовано ПЛР</string>
+    <string name="testingIPA">Тестовано ІФА</string>
+    <string name="region">Регіон</string>
+    <string name="forDay">За добу</string>
+    <string name="forPeriod">За період</string>
+</resources>
