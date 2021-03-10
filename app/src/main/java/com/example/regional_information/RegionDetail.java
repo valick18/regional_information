@@ -14,34 +14,37 @@ import java.util.List;
 
 public class RegionDetail extends ListActivity {
     private RegionInfo region;
+    private RegionInfo regionInfoFP;
 
     public void onCreate(Bundle savedBundle){
         super.onCreate(savedBundle);
         Bundle bundle = getIntent().getExtras();
         int position = bundle.getInt("index");
         region = MainActivity.getInstance().getList().get(position);
+        regionInfoFP = MainActivity.getInstance().getListForPeriod().get(position);
         ArrayList<RegionInfoMap> list = new ArrayList<>();
-        list.add(new RegionInfoMap("",region.regionName));
-        list.add(new RegionInfoMap("", "За добу"));
-        list.add(new RegionInfoMap("Захворіло",""+region.sick));
-        list.add(new RegionInfoMap("Шпиталізовано",""+region.hospitalized));
-        list.add(new RegionInfoMap("Померло",""+region.dead));
-        list.add(new RegionInfoMap("Одужало",""+region.recovered));
-        list.add(new RegionInfoMap("Вакциновано",""+region.vaccinated));
-        list.add(new RegionInfoMap("Тестовано ПЛР",""+region.testedPCR));
-        list.add(new RegionInfoMap("Тестовано ІФА",""+region.testedIFA));
-        String from[] = {RegionInfoMap.key1,RegionInfoMap.key2};
-        int to[] = {R.id.tvInfo,R.id.tvNum};
+        list.add(new RegionInfoMap("",region.regionName, ""));
+        list.add(new RegionInfoMap("", "За добу", "За період"));
+        list.add(new RegionInfoMap("Захворіло",""+region.sick, ""+regionInfoFP.sick));
+        list.add(new RegionInfoMap("Шпиталізовано",""+region.hospitalized, ""+regionInfoFP.hospitalized));
+        list.add(new RegionInfoMap("Померло",""+region.dead, ""+regionInfoFP.dead));
+        list.add(new RegionInfoMap("Одужало",""+region.recovered, ""+regionInfoFP.recovered));
+        list.add(new RegionInfoMap("Вакциновано",""+region.vaccinated, ""+regionInfoFP.vaccinated));
+        list.add(new RegionInfoMap("Тестовано ПЛР",""+region.testedPCR, ""+regionInfoFP.testedPCR));
+        list.add(new RegionInfoMap("Тестовано ІФА",""+region.testedIFA, ""+regionInfoFP.testedIFA));
+        String from[] = {RegionInfoMap.key1,RegionInfoMap.key2, RegionInfoMap.key3};
+        int to[] = {R.id.tvInfo,R.id.tvNum, R.id.tvPeriodInfo};
         SimpleAdapter simpleAdapter = new SimpleAdapter(this,list,R.layout.region_detail,from,to);
         setListAdapter(simpleAdapter);
     }
 
         private class RegionInfoMap extends HashMap<String,String> {
-              static final String key1 = "info", key2 = "number";
+              static final String key1 = "info", key2 = "number", key3 = "periodInfo";
 
-             RegionInfoMap(String info, String number){
+             RegionInfoMap(String info, String number, String infoPeriod){
                 this.put(key1,info);
                 this.put(key2,number);
+                this.put(key3,infoPeriod);
              }
         }
 
