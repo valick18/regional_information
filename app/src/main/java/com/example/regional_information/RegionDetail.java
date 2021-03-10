@@ -13,16 +13,31 @@ import java.util.HashMap;
 import java.util.List;
 
 public class RegionDetail extends ListActivity {
+
     private RegionInfo region;
     private RegionInfo regionInfoFP;
+    private ArrayList<RegionInfoMap> list;
 
     public void onCreate(Bundle savedBundle){
         super.onCreate(savedBundle);
+
         Bundle bundle = getIntent().getExtras();
         int position = bundle.getInt("index");
+
         region = MainActivity.getInstance().getList().get(position);
         regionInfoFP = MainActivity.getInstance().getListForPeriod().get(position);
-        ArrayList<RegionInfoMap> list = new ArrayList<>();
+
+        initList();
+
+        String from[] = {RegionInfoMap.key1,RegionInfoMap.key2, RegionInfoMap.key3};
+        int to[] = {R.id.tvInfo,R.id.tvNum, R.id.tvPeriodInfo};
+
+        SimpleAdapter simpleAdapter = new SimpleAdapter(this,list,R.layout.region_detail,from,to);
+        setListAdapter(simpleAdapter);
+    }
+
+    private void initList(){
+        list = new ArrayList<>();
         list.add(new RegionInfoMap("",region.regionName, ""));
         list.add(new RegionInfoMap("", "За добу", "За період"));
         list.add(new RegionInfoMap("Захворіло",""+region.sick, ""+regionInfoFP.sick));
@@ -32,14 +47,10 @@ public class RegionDetail extends ListActivity {
         list.add(new RegionInfoMap("Вакциновано",""+region.vaccinated, ""+regionInfoFP.vaccinated));
         list.add(new RegionInfoMap("Тестовано ПЛР",""+region.testedPCR, ""+regionInfoFP.testedPCR));
         list.add(new RegionInfoMap("Тестовано ІФА",""+region.testedIFA, ""+regionInfoFP.testedIFA));
-        String from[] = {RegionInfoMap.key1,RegionInfoMap.key2, RegionInfoMap.key3};
-        int to[] = {R.id.tvInfo,R.id.tvNum, R.id.tvPeriodInfo};
-        SimpleAdapter simpleAdapter = new SimpleAdapter(this,list,R.layout.region_detail,from,to);
-        setListAdapter(simpleAdapter);
     }
 
         private class RegionInfoMap extends HashMap<String,String> {
-              static final String key1 = "info", key2 = "number", key3 = "periodInfo";
+            static final String key1 = "info", key2 = "number", key3 = "periodInfo";
 
              RegionInfoMap(String info, String number, String infoPeriod){
                 this.put(key1,info);

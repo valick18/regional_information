@@ -112,7 +112,6 @@ public class MainActivity extends AppCompatActivity {
         return listForPeriod;
     }
 
-
     private class QueryRegionInDB extends AsyncTask<RegionInfo,Void,Void> {
 
         public static final int DATABASE_FOR_DAY = 0, DATABASE_FOR_PERIOD = 1;
