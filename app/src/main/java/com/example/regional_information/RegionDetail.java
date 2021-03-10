@@ -1,51 +1,49 @@
 package com.example.regional_information;
 
 import android.app.Activity;
+import android.app.ListActivity;
 import android.os.Bundle;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.example.regional_information.database.DAO;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-public class RegionDetail extends Activity {
-    private TextView tvSick,tvRegion,tvDead, tvNowBetter;
-    private TextView tvVaccinated,tvPLR,tvIPA, tvHospit;
+public class RegionDetail extends ListActivity {
     private RegionInfo region;
 
     public void onCreate(Bundle savedBundle){
         super.onCreate(savedBundle);
-        setContentView(R.layout.region_detail);
-        init();
         Bundle bundle = getIntent().getExtras();
         int position = bundle.getInt("index");
         region = MainActivity.getInstance().getList().get(position);
-        fillTextView();
+        ArrayList<RegionInfoMap> list = new ArrayList<>();
+        list.add(new RegionInfoMap("",region.regionName));
+        list.add(new RegionInfoMap("", "За добу"));
+        list.add(new RegionInfoMap("Захворіло",""+region.sick));
+        list.add(new RegionInfoMap("Шпиталізовано",""+region.hospitalized));
+        list.add(new RegionInfoMap("Померло",""+region.dead));
+        list.add(new RegionInfoMap("Одужало",""+region.recovered));
+        list.add(new RegionInfoMap("Вакциновано",""+region.vaccinated));
+        list.add(new RegionInfoMap("Тестовано ПЛР",""+region.testedPCR));
+        list.add(new RegionInfoMap("Тестовано ІФА",""+region.testedIFA));
+        String from[] = {RegionInfoMap.key1,RegionInfoMap.key2};
+        int to[] = {R.id.tvInfo,R.id.tvNum};
+        SimpleAdapter simpleAdapter = new SimpleAdapter(this,list,R.layout.region_detail,from,to);
+        setListAdapter(simpleAdapter);
     }
 
-    private void init(){
-        tvSick = findViewById(R.id.tvSicks);
-        tvRegion = findViewById(R.id.regionName);
-        tvDead = findViewById(R.id.tvDead);
-        tvVaccinated = findViewById(R.id.tvVaccinated);
-        tvPLR = findViewById(R.id.tvPLR);
-        tvIPA = findViewById(R.id.tvIPA);
-        tvHospit = findViewById(R.id.tvHospit);
-        tvNowBetter = findViewById(R.id.tvRecovered);
-    }
+        private class RegionInfoMap extends HashMap<String,String> {
+              static final String key1 = "info", key2 = "number";
 
-    private void fillTextView(){
-        tvRegion.setText(region.regionName);
-        tvSick.setText(""+region.sick);
-        tvDead.setText(""+region.dead);
-        tvVaccinated.setText(""+region.vaccinated);
-        tvPLR.setText(""+region.testedPCR);
-        tvIPA.setText(""+region.testedIFA);
-        tvHospit.setText(""+region.hospitalized);
-        tvNowBetter.setText(""+region.recovered);
-    }
-
-
+             RegionInfoMap(String info, String number){
+                this.put(key1,info);
+                this.put(key2,number);
+             }
+        }
 
 
 }

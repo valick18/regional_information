@@ -4,7 +4,7 @@ import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "", indices = @Index(value = {"id"},unique = true))
+@Entity(indices = {@Index(value = {"regionName", "id"}, unique = true)})
 public class RegionInfo {
 
     @PrimaryKey(autoGenerate = true)
@@ -12,7 +12,6 @@ public class RegionInfo {
    public String regionName;
    public int sick, hospitalized, dead, recovered;
    public int vaccinated, testedPCR, testedIFA;
-
 
     public RegionInfo(String regionName, int sick, int hospitalized, int dead, int recovered, int vaccinated, int testedPCR, int testedIFA){
         this.regionName = regionName;

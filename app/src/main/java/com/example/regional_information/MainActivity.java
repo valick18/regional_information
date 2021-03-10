@@ -32,9 +32,13 @@ public class MainActivity extends AppCompatActivity {
          rv = findViewById(R.id.rv);
 
         instance = this;
+
         createDB();
+
         dao = database.RegionDAO();
-        createRegions();
+        if(dao.getAll().size()==0)
+            createRegions();
+
         rv.setLayoutManager(new LinearLayoutManager(this));
         new SetListRegions().execute();
 
@@ -45,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createDB(){
-        database = Room.databaseBuilder(this, RegionDatabase.class,"database")
+        database = Room.databaseBuilder(this, RegionDatabase.class,"database").allowMainThreadQueries()
                 .build();
     }
 

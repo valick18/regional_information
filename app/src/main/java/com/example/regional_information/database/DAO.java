@@ -28,7 +28,7 @@ public interface DAO {
     @Delete
     void delete(RegionInfo regionInfo);
 
-    @Query("DELETE FROM regioninfo where id>=0")
+    @Query("DELETE FROM RegionInfo where id>=0")
     void deleteAll();
 
 }
