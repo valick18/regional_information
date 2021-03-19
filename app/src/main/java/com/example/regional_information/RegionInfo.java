@@ -12,8 +12,9 @@ public class RegionInfo {
    public String regionName;
    public int sick, hospitalized, dead, recovered;
    public int vaccinated, testedPCR, testedIFA;
+   public double lat1, long2;
 
-    public RegionInfo(String regionName, int sick, int hospitalized, int dead, int recovered, int vaccinated, int testedPCR, int testedIFA){
+    public RegionInfo(String regionName, int sick, int hospitalized, int dead, int recovered, int vaccinated, int testedPCR, int testedIFA, double lat1, double long2){
         this.regionName = regionName;
         this.sick = sick;
         this.hospitalized = hospitalized;
@@ -22,6 +23,8 @@ public class RegionInfo {
         this.vaccinated = vaccinated;
         this.testedPCR = testedPCR;
         this.testedIFA = testedIFA;
+        this.lat1 = lat1;
+        this.long2 = long2;
     }
 
 }

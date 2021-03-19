@@ -9,8 +9,12 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -27,27 +31,37 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     }
 
 
-    private void drawCircle(LatLng point, int color) {
-        // Instantiating CircleOptions to draw a circle around the marker
+    private void drawCircle(int radius, LatLng point, int color) {
         CircleOptions circleOptions = new CircleOptions();
-        // Specifying the center of the circle
         circleOptions.center(point);
-        // Radius of the circle
-        circleOptions.radius(5000);
-        // Border color of the circle
+        circleOptions.radius(radius);
         circleOptions.strokeColor(Color.BLACK);
-        // Fill color of the circle
         circleOptions.fillColor(color);
-        // Border width of the circle
         circleOptions.strokeWidth(2);
-
-        // Adding the circle to the GoogleMap
         gMap.addCircle(circleOptions);
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         gMap = googleMap;
-        drawCircle(new LatLng(50.438317630367806, 30.558323422753823), 0x30ff0000);
+        gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        gMap.getUiSettings().setZoomControlsEnabled(true);
+        drawAllElements();
     }
+
+    private void drawAllElements(){
+    List<RegionInfo> list = MainActivity.getInstance().getList();
+    for(int i = 0; i < list.size(); i++){
+        RegionInfo regionInfo = list.get(i);
+
+        String sick = ""+regionInfo.sick;
+
+        double lat1 = regionInfo.lat1;
+        double long2 = regionInfo.long2;
+
+        drawCircle(2000*sick.length(), new LatLng(lat1,long2),0x30ff0000);
+    }
+
+    }
+
 }
