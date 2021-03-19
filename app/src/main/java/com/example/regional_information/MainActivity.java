@@ -1,8 +1,10 @@
 package com.example.regional_information;
 
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private DAO daoForDay;
     private DAO daoForPeriod;
     private RegionDBForPeriod dbForPeriod;
+    private ImageView btMap;
 
     private List<RegionInfo> list;
     private List<RegionInfo> listForPeriod;
@@ -36,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
         instance = this;
 
         createDBs();
+
+        btMap = findViewById(R.id.btMap);
+        btMap.setOnClickListener(e->startActivity(new Intent(getApplicationContext(), MapActivity.class)));
 
         daoForDay = dbForDay.RegionDAO();
         daoForPeriod = dbForPeriod.RegionDAO();
@@ -57,9 +63,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void createDBs(){
-        dbForDay = Room.databaseBuilder(this, RegionDatabase.class,"database").allowMainThreadQueries()
+        dbForDay = Room.databaseBuilder(this, RegionDatabase.class,"database").allowMainThreadQueries().fallbackToDestructiveMigration()
                 .build();
-        dbForPeriod = Room.databaseBuilder(this,RegionDBForPeriod.class,"DBforPeriod").allowMainThreadQueries()
+        dbForPeriod = Room.databaseBuilder(this,RegionDBForPeriod.class,"DBforPeriod").allowMainThreadQueries().fallbackToDestructiveMigration()
                 .build();
     }
 
@@ -72,23 +78,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createRegions(){
-        RegionInfo regionBogorodchany = new RegionInfo("Богородчани",300,50,15,100,20,15,18);
-        RegionInfo regionVerhovyna = new RegionInfo("Верховина",204,20,12,60,34,13,15);
-        RegionInfo regionGalyich = new RegionInfo("Галич",100,31,12,56,31,18,9);
-        RegionInfo regiondDolyna = new RegionInfo("Долина",153,16,10,57,28,19,5);
-        RegionInfo regionIF = new RegionInfo("Івано-Франківськ",500,72,23,100,89,31,18);
-        RegionInfo regionTismenyca = new RegionInfo("Тисмениця",100,10,3,23,20,15,18);
+        RegionInfo regionBogorodchany = new RegionInfo("Богородчани",300,50,15,100,20,15,18, 48.8091297, 24.5393031);
+        RegionInfo regionVerhovyna = new RegionInfo("Верховина",204,20,12,60,34,13,15,48.1551793,24.8299817);
+        RegionInfo regionGalyich = new RegionInfo("Галич",100,31,12,56,31,18,9,49.1230535, 24.7282829);
+        RegionInfo regiondDolyna = new RegionInfo("Долина",153,16,10,57,28,19,5,48.9732603,23.9805924);
+        RegionInfo regionIF = new RegionInfo("Івано-Франківськ",500,72,23,100,89,31,18,48.9228059,24.7093982);
+        RegionInfo regionTismenyca = new RegionInfo("Тисмениця",100,10,3,23,20,15,18,48.901473,24.8462707);
         fillDB(QueryRegionInDB.DATABASE_FOR_DAY,regionBogorodchany,regionVerhovyna,regionGalyich,regiondDolyna,regionIF,regionTismenyca);
     }
 
 
     private void createRegionsInfoForPeriod(){
-        RegionInfo regionBogorodchany = new RegionInfo("Богородчани",35,300,3000,30000,300000,10000,10000);
-        RegionInfo regionVerhovyna = new RegionInfo("Верховина",30,300,3000,30000,300000,10000,10000);
-        RegionInfo regionGalyich = new RegionInfo("Галич",30,300,3000,30000,300000,10000,10000);
-        RegionInfo regiondDolyna = new RegionInfo("Долина",30,300,3000,30000,300000,10000,10000);
-        RegionInfo regionIF = new RegionInfo("Івано-Франківськ",50,300,3000,30000,300000,10000,10000);
-        RegionInfo regionTismenyca = new RegionInfo("Тисмениця",30,300,3000,30000,300000,10000,10000);
+        RegionInfo regionBogorodchany = new RegionInfo("Богородчани",35,300,3000,30000,300000,10000,10000,48.8091297, 24.5393031);
+        RegionInfo regionVerhovyna = new RegionInfo("Верховина",30,300,3000,30000,300000,10000,10000,48.1551793,24.8299817);
+        RegionInfo regionGalyich = new RegionInfo("Галич",30,300,3000,30000,300000,10000,10000,49.1230535, 24.7282829);
+        RegionInfo regiondDolyna = new RegionInfo("Долина",30,300,3000,30000,300000,10000,10000,48.9732603,23.9805924);
+        RegionInfo regionIF = new RegionInfo("Івано-Франківськ",50,300,3000,30000,300000,10000,10000,48.9228059,24.7093982);
+        RegionInfo regionTismenyca = new RegionInfo("Тисмениця",30,300,3000,30000,300000,10000,10000,48.901473,24.8462707);
         fillDB(QueryRegionInDB.DATABASE_FOR_PERIOD,regionBogorodchany,regionVerhovyna,regionGalyich,regiondDolyna,regionIF,regionTismenyca);
     }
 
