@@ -15,6 +15,7 @@ import com.example.regional_information.database.DAO;
 import com.example.regional_information.database.RegionDBForPeriod;
 import com.example.regional_information.database.RegionDatabase;
 
+import java.io.IOException;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private List<RegionInfo> listForPeriod;
     private static MainActivity instance;
     private RecyclerView rv;
+    private ReaderExcelFile readerExcelFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         rv = findViewById(R.id.rv);
 
+        readerExcelFile = new ReaderExcelFile("Шлях до файлу");
         instance = this;
 
         createDBs();
