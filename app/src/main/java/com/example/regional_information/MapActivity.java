@@ -48,6 +48,16 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         circleOptions.fillColor(color);
         circleOptions.strokeWidth(2);
         gMap.addCircle(circleOptions);
+
+        gMap.addMarker(new MarkerOptions()
+                .alpha(0)
+                .position(point)
+                .title("какой-то текст")
+                .snippet("какой-то ещё текст" +
+                        "\n" + "следующая строка"));
+
+        CustomInfoWindowAdapter adapter = new CustomInfoWindowAdapter(MapActivity.this);
+        gMap.setInfoWindowAdapter(adapter);
     }
 
     private void drawPolygon(LatLng... point) {
@@ -75,14 +85,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         XmlPullParser xpp = getResources().getXml(R.xml.iv_frank_coordinates);
         CoordinatesParser parser = new CoordinatesParser();
 
-         parser.parse(xpp);
-         List<Coordinates> coordinatesList = parser.getCoordinatesList();
-         int size = coordinatesList.size();
-            LatLng [] latLngs = new LatLng[size];
-            for(int i = 0; i<size; i++){
-                Coordinates cs = coordinatesList.get(i);
-                latLngs[i] = new LatLng(cs.getLatitude(), cs.getLongitude());
-            }
+        parser.parse(xpp);
+        List<Coordinates> coordinatesList = parser.getCoordinatesList();
+        int size = coordinatesList.size();
+        LatLng[] latLngs = new LatLng[size];
+        for (int i = 0; i < size; i++) {
+            Coordinates cs = coordinatesList.get(i);
+            latLngs[i] = new LatLng(cs.getLatitude(), cs.getLongitude());
+        }
 
         drawPolygon(latLngs);
     }
@@ -99,7 +109,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         }
 
     }
-
 
 
 }
