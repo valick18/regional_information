@@ -1,4 +1,4 @@
-package com.example.regional_information;
+package com.example.regional_information.parserXML;
 
 
 public class Coordinates {

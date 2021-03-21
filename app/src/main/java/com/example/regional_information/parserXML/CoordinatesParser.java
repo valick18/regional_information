@@ -1,6 +1,6 @@
-package com.example.regional_information;
+package com.example.regional_information.parserXML;
 
-import android.util.Log;
+import com.example.regional_information.parserXML.Coordinates;
 
 import org.xmlpull.v1.XmlPullParser;
 

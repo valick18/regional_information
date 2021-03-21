@@ -2,22 +2,20 @@ package com.example.regional_information;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.fragment.app.FragmentActivity;
 
+import com.example.regional_information.parserXML.Coordinates;
+import com.example.regional_information.parserXML.CoordinatesParser;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.UiSettings;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolygonOptions;
 
 import org.xmlpull.v1.XmlPullParser;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -86,12 +84,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         for (int i = 0; i < list.size(); i++) {
             RegionInfo regionInfo = list.get(i);
 
-            String sick = "" + regionInfo.sick;
+            String sick = "" + regionInfo.getSick();
 
-            double lat1 = regionInfo.lat1;
-            double long2 = regionInfo.long2;
+            double lat1 = regionInfo.getLat1();
+            double long2 = regionInfo.getLong2();
 
-            drawCircle(2000 * sick.length(), new LatLng(lat1, long2), 0x30ff0000);
+            drawCircle(2000 * sick.length(), new LatLng(lat1, long2), regionInfo.getColorZone());
         }
 
     }

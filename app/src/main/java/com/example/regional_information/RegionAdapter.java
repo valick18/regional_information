@@ -30,8 +30,8 @@ public class RegionAdapter extends RecyclerView.Adapter<RegionAdapter.RegionView
     @Override
     public void onBindViewHolder(@NonNull RegionViewHolder holder, int position) {
         Context context = holder.itemView.getContext();
-        holder.region.setText(list.get(position).regionName);
-        holder.sickForDay.setText(""+list.get(position).sick);
+        holder.region.setText(list.get(position).getRegionName());
+        holder.sickForDay.setText(""+list.get(position).getSick());
         Intent intent = new Intent(context,RegionDetail.class);
         intent.putExtra("index",position);
         holder.itemView.setOnClickListener(e->context.startActivity(intent));

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<regiones>
+    <region>
+        <name-region>Богородчани</name-region>
+        <sick>300</sick>
+        <hospitalized>50</hospitalized>
+        <dead>15</dead>
+        <recoverd>100</recoverd>
+        <vaccinated>20</vaccinated>
+        <tested-pcr>15</tested-pcr>
+        <tested-ifa>18</tested-ifa>
+        <lat>48.8091297</lat>
+        <long>24.5393031</long>
+        <color-zone>red</color-zone>
+    </region>
+    <region>
+        <name-region>Верховина</name-region>
+        <sick>204</sick>
+        <hospitalized>20</hospitalized>
+        <dead>12</dead>
+        <recoverd>60</recoverd>
+        <vaccinated>20</vaccinated>
+        <tested-pcr>12</tested-pcr>
+        <tested-ifa>18</tested-ifa>
+        <lat>48.1551793</lat>
+        <long>24.8299817</long>
+        <color-zone>red</color-zone>
+    </region>
+    <region>
+        <name-region>Галич</name-region>
+        <sick>300</sick>
+        <hospitalized>20</hospitalized>
+        <dead>12</dead>
+        <recoverd>35</recoverd>
+        <vaccinated>21</vaccinated>
+        <tested-pcr>12</tested-pcr>
+        <tested-ifa>18</tested-ifa>
+        <lat>49.1230535</lat>
+        <long>24.7282829</long>
+        <color-zone>green</color-zone>
+    </region>
+    <region>
+        <name-region>Долина</name-region>
+        <sick>125</sick>
+        <hospitalized>76</hospitalized>
+        <dead>6</dead>
+        <recoverd>45</recoverd>
+        <vaccinated>21</vaccinated>
+        <tested-pcr>12</tested-pcr>
+        <tested-ifa>18</tested-ifa>
+        <lat>48.9732603</lat>
+        <long>23.9805924</long>
+        <color-zone>green</color-zone>
+    </region>
+    <region>
+        <name-region>Івано-Франківськ</name-region>
+        <sick>500</sick>
+        <hospitalized>54</hospitalized>
+        <dead>15</dead>
+        <recoverd>32</recoverd>
+        <vaccinated>45</vaccinated>
+        <tested-pcr>53</tested-pcr>
+        <tested-ifa>18</tested-ifa>
+        <lat>48.9228059</lat>
+        <long>24.7093982</long>
+        <color-zone>yellow</color-zone>
+    </region>
+    <region>
+        <name-region>Тисмениця</name-region>
+        <sick>100</sick>
+        <hospitalized>23</hospitalized>
+        <dead>19</dead>
+        <recoverd>12</recoverd>
+        <vaccinated>34</vaccinated>
+        <tested-pcr>13</tested-pcr>
+        <tested-ifa>12</tested-ifa>
+        <lat>48.901473</lat>
+        <long>24.8462707</long>
+        <color-zone>yellow</color-zone>
+    </region>
+</regiones>
+
+
+
+
+

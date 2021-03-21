@@ -8,23 +8,115 @@ import androidx.room.PrimaryKey;
 public class RegionInfo {
 
     @PrimaryKey(autoGenerate = true)
-   public long id;
-   public String regionName;
-   public int sick, hospitalized, dead, recovered;
-   public int vaccinated, testedPCR, testedIFA;
-   public double lat1, long2;
+   private long id;
+   private String regionName;
+   private int sick;
 
-    public RegionInfo(String regionName, int sick, int hospitalized, int dead, int recovered, int vaccinated, int testedPCR, int testedIFA, double lat1, double long2){
+
+
+
+    private int hospitalized;
+    private int dead;
+    private int recovered;
+   private int vaccinated, testedPCR, testedIFA;
+   private double lat1, long2;
+   private int colorZone;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getRegionName() {
+        return regionName;
+    }
+
+    public void setRegionName(String regionName) {
         this.regionName = regionName;
+    }
+
+    public int getSick() {
+        return sick;
+    }
+
+    public void setSick(int sick) {
         this.sick = sick;
+    }
+
+    public int getHospitalized() {
+        return hospitalized;
+    }
+
+    public void setHospitalized(int hospitalized) {
         this.hospitalized = hospitalized;
+    }
+
+    public int getDead() {
+        return dead;
+    }
+
+    public void setDead(int dead) {
         this.dead = dead;
+    }
+
+    public int getRecovered() {
+        return recovered;
+    }
+
+    public void setRecovered(int recovered) {
         this.recovered = recovered;
+    }
+
+    public int getVaccinated() {
+        return vaccinated;
+    }
+
+    public void setVaccinated(int vaccinated) {
         this.vaccinated = vaccinated;
+    }
+
+    public int getTestedPCR() {
+        return testedPCR;
+    }
+
+    public void setTestedPCR(int testedPCR) {
         this.testedPCR = testedPCR;
+    }
+
+    public int getTestedIFA() {
+        return testedIFA;
+    }
+
+    public void setTestedIFA(int testedIFA) {
         this.testedIFA = testedIFA;
+    }
+
+    public double getLat1() {
+        return lat1;
+    }
+
+    public void setLat1(double lat1) {
         this.lat1 = lat1;
+    }
+
+    public double getLong2() {
+        return long2;
+    }
+
+    public void setLong2(double long2) {
         this.long2 = long2;
     }
+
+    public int getColorZone() {
+        return colorZone;
+    }
+
+    public void setColorZone(int colorZone) {
+        this.colorZone = colorZone;
+    }
+
 
 }

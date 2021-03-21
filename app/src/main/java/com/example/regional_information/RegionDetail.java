@@ -38,15 +38,15 @@ public class RegionDetail extends ListActivity {
 
     private void initList(){
         list = new ArrayList<>();
-        list.add(new RegionInfoMap("",region.regionName, ""));
+        list.add(new RegionInfoMap("",region.getRegionName(), ""));
         list.add(new RegionInfoMap("", "За добу", "За період"));
-        list.add(new RegionInfoMap("Захворіло",""+region.sick, ""+regionInfoFP.sick));
-        list.add(new RegionInfoMap("Шпиталізовано",""+region.hospitalized, ""+regionInfoFP.hospitalized));
-        list.add(new RegionInfoMap("Померло",""+region.dead, ""+regionInfoFP.dead));
-        list.add(new RegionInfoMap("Одужало",""+region.recovered, ""+regionInfoFP.recovered));
-        list.add(new RegionInfoMap("Вакциновано",""+region.vaccinated, ""+regionInfoFP.vaccinated));
-        list.add(new RegionInfoMap("Тестовано ПЛР",""+region.testedPCR, ""+regionInfoFP.testedPCR));
-        list.add(new RegionInfoMap("Тестовано ІФА",""+region.testedIFA, ""+regionInfoFP.testedIFA));
+        list.add(new RegionInfoMap("Захворіло",""+region.getSick(), ""+regionInfoFP.getSick()));
+        list.add(new RegionInfoMap("Шпиталізовано",""+region.getHospitalized(), ""+regionInfoFP.getHospitalized()));
+        list.add(new RegionInfoMap("Померло",""+region.getDead(), ""+regionInfoFP.getDead()));
+        list.add(new RegionInfoMap("Одужало",""+region.getRecovered(), ""+regionInfoFP.getRecovered()));
+        list.add(new RegionInfoMap("Вакциновано",""+region.getVaccinated(), ""+regionInfoFP.getVaccinated()));
+        list.add(new RegionInfoMap("Тестовано ПЛР",""+region.getTestedPCR(), ""+regionInfoFP.getTestedPCR()));
+        list.add(new RegionInfoMap("Тестовано ІФА",""+region.getTestedIFA(), ""+regionInfoFP.getTestedIFA()));
     }
 
         private class RegionInfoMap extends HashMap<String,String> {
