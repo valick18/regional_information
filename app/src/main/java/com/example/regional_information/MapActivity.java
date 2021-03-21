@@ -40,24 +40,38 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     }
 
 
-    private void drawCircle(int radius, LatLng point, int color) {
+    private void drawCircle(RegionInfo region, LatLng point) {
+        List<RegionInfo> list = MainActivity.getInstance().getList();
         CircleOptions circleOptions = new CircleOptions();
         circleOptions.center(point);
-        circleOptions.radius(radius);
+        circleOptions.radius(region.getSick());
         circleOptions.strokeColor(Color.BLACK);
-        circleOptions.fillColor(color);
+        circleOptions.fillColor(getColorZone(region));
         circleOptions.strokeWidth(2);
         gMap.addCircle(circleOptions);
 
         gMap.addMarker(new MarkerOptions()
                 .alpha(0)
                 .position(point)
-                .title("какой-то текст")
-                .snippet("какой-то ещё текст" +
-                        "\n" + "следующая строка"));
+                .title(""+region.getRegionName())
+                .snippet("Померло за добу: " + region.getDead()+
+                        "\n" + "Виздоровіло: "+ region.getRecovered()));
 
         CustomInfoWindowAdapter adapter = new CustomInfoWindowAdapter(MapActivity.this);
         gMap.setInfoWindowAdapter(adapter);
+    }
+
+    private int getColorZone(RegionInfo region) {
+        int sick = region.getSick();
+        int color = 0;
+        if(sick < 1000){
+         color = Color.GREEN;
+        }else if(sick > 1000 && sick < 3000){
+            color = Color.YELLOW;
+        }else if(sick > 3000){
+            color = Color.RED;
+        }
+        return color;
     }
 
     private void drawPolygon(LatLng... point) {
@@ -105,7 +119,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             double lat1 = regionInfo.getLat1();
             double long2 = regionInfo.getLong2();
 
-            drawCircle(regionInfo.getSick(), new LatLng(lat1, long2), regionInfo.getColorZone());
+            drawCircle(regionInfo, new LatLng(lat1, long2));
         }
 
     }

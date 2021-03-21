@@ -65,20 +65,6 @@ public class RegionParser {
                                 regionInfo.setTestedPCR(Integer.parseInt(textValue));
                             } else if ("tested-ifa".equalsIgnoreCase(tagName)) {
                                 regionInfo.setTestedIFA(Integer.parseInt(textValue));
-                            } else if ("color-zone".equalsIgnoreCase(tagName)) {
-                                int color = 0;
-                                switch (textValue) {
-                                    case "green":
-                                        color = Color.GREEN;
-                                        break;
-                                    case "red":
-                                        color = Color.RED;
-                                        break;
-                                    case "yellow":
-                                        color = Color.YELLOW;
-                                        break;
-                                }
-                                regionInfo.setColorZone(color);
                             }
                         }
                         break;

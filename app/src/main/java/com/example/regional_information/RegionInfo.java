@@ -17,7 +17,6 @@ public class RegionInfo {
     private int recovered;
     private int vaccinated, testedPCR, testedIFA;
     private double lat1, long2;
-    private int colorZone;
 
     public long getId() {
         return id;
@@ -107,14 +106,6 @@ public class RegionInfo {
         this.long2 = long2;
     }
 
-    public int getColorZone() {
-        return colorZone;
-    }
-
-    public void setColorZone(int colorZone) {
-        this.colorZone = colorZone;
-    }
-
     @Override
     public String toString() {
         return "RegionInfo{" +
@@ -129,7 +120,6 @@ public class RegionInfo {
                 ", testedIFA=" + testedIFA +
                 ", lat1=" + lat1 +
                 ", long2=" + long2 +
-                ", colorZone=" + colorZone +
                 '}';
     }
 }

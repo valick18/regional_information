@@ -6,7 +6,7 @@ import androidx.room.RoomDatabase;
 
 import com.example.regional_information.RegionInfo;
 
-@Database(entities = {RegionInfo.class}, version = 4)
+@Database(entities = {RegionInfo.class}, version = 5)
 public abstract class RegionDatabase extends RoomDatabase {
     public abstract DAO RegionDAO();
 }
