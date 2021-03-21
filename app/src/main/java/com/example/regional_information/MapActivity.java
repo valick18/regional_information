@@ -67,11 +67,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         gMap.getUiSettings().setZoomControlsEnabled(true);
         drawAllElements();
         drawPolygonForFrankivsk();
-        for(RegionInfo region: MainActivity.getInstance().getList()){
-            BitmapDescriptor icon = createPureTextIcon(""+region.getDead());
-            googleMap.addMarker(new MarkerOptions().position(new LatLng(region.getLat1(),region.getLong2()))
-                    .title("У розробці").icon(icon));
-        }
     }
 
 
@@ -97,36 +92,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         for (int i = 0; i < list.size(); i++) {
             RegionInfo regionInfo = list.get(i);
 
-            String sick = "" + regionInfo.getSick();
-
             double lat1 = regionInfo.getLat1();
             double long2 = regionInfo.getLong2();
 
-            drawCircle(500 * sick.length(), new LatLng(lat1, long2), regionInfo.getColorZone());
+            drawCircle(regionInfo.getSick(), new LatLng(lat1, long2), regionInfo.getColorZone());
         }
 
     }
 
-    public BitmapDescriptor createPureTextIcon(String text) {
-
-        Paint textPaint = new Paint();
-        textPaint.setTextSize(40);
-        float textWidth = textPaint.measureText(text);
-        float textHeight = textPaint.getTextSize();
-        int width = (int) (textWidth);
-        int height = (int) (textHeight);
-
-        Bitmap image = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_4444);
-        Canvas canvas = new Canvas(image);
-
-        canvas.translate(0, height);
-
-        canvas.drawColor(Color.WHITE);
-
-        canvas.drawText(text, 0, 0, textPaint);
-        BitmapDescriptor icon = BitmapDescriptorFactory.fromBitmap(image);
-        return icon;
-    }
 
 
 }
