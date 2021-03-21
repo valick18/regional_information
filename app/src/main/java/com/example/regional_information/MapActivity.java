@@ -67,21 +67,20 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         XmlPullParser xpp = getResources().getXml(R.xml.iv_frank_coordinates);
         CoordinatesParser parser = new CoordinatesParser();
 
-        parser.parse(xpp);
-        List<Coordinates> coordinatesList = parser.getCoordinatesList();
-        int size = coordinatesList.size();
-        LatLng[] latLngs = new LatLng[size];
-        for (int i = 0; i < size; i++) {
-            Coordinates cs = coordinatesList.get(i);
-            latLngs[i] = new LatLng(cs.getLatitude(), cs.getLongitude());
-        }
+         parser.parse(xpp);
+         List<Coordinates> coordinatesList = parser.getCoordinatesList();
+         int size = coordinatesList.size();
+            LatLng [] latLngs = new LatLng[size];
+            for(int i = 0; i<size; i++){
+                Coordinates cs = coordinatesList.get(i);
+                latLngs[i] = new LatLng(cs.getLatitude(), cs.getLongitude());
+            }
 
         drawPolygon(latLngs);
     }
 
     private void drawAllElements() {
         List<RegionInfo> list = MainActivity.getInstance().getList();
-
         for (int i = 0; i < list.size(); i++) {
             RegionInfo regionInfo = list.get(i);
 
@@ -91,10 +90,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             double long2 = regionInfo.getLong2();
 
             drawCircle(2000 * sick.length(), new LatLng(lat1, long2), regionInfo.getColorZone());
-            System.out.println("Region info " + regionInfo.getColorZone());
-            System.out.println("GREEN " + Color.GREEN);
-            System.out.println("RED " + Color.RED);
-            System.out.println("YELLOW " + Color.YELLOW);
         }
 
     }
