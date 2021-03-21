@@ -1,6 +1,10 @@
 package com.example.regional_information;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.Icon;
 import android.os.Bundle;
 
 import androidx.fragment.app.FragmentActivity;
@@ -10,8 +14,11 @@ import com.example.regional_information.parserXML.CoordinatesParser;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -60,7 +67,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         gMap.getUiSettings().setZoomControlsEnabled(true);
         drawAllElements();
         drawPolygonForFrankivsk();
+        for(RegionInfo region: MainActivity.getInstance().getList()){
+            BitmapDescriptor icon = createPureTextIcon(""+region.getDead());
+            googleMap.addMarker(new MarkerOptions().position(new LatLng(region.getLat1(),region.getLong2()))
+                    .title("У розробці").icon(icon));
+        }
     }
+
 
     private void drawPolygonForFrankivsk() {
 
@@ -89,9 +102,30 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             double lat1 = regionInfo.getLat1();
             double long2 = regionInfo.getLong2();
 
-            drawCircle(2000 * sick.length(), new LatLng(lat1, long2), regionInfo.getColorZone());
+            drawCircle(500 * sick.length(), new LatLng(lat1, long2), regionInfo.getColorZone());
         }
 
+    }
+
+    public BitmapDescriptor createPureTextIcon(String text) {
+
+        Paint textPaint = new Paint();
+        textPaint.setTextSize(40);
+        float textWidth = textPaint.measureText(text);
+        float textHeight = textPaint.getTextSize();
+        int width = (int) (textWidth);
+        int height = (int) (textHeight);
+
+        Bitmap image = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_4444);
+        Canvas canvas = new Canvas(image);
+
+        canvas.translate(0, height);
+
+        canvas.drawColor(Color.WHITE);
+
+        canvas.drawText(text, 0, 0, textPaint);
+        BitmapDescriptor icon = BitmapDescriptorFactory.fromBitmap(image);
+        return icon;
     }
 
 
