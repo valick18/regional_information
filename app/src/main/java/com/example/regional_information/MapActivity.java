@@ -81,6 +81,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
     private void drawAllElements() {
         List<RegionInfo> list = MainActivity.getInstance().getList();
+
         for (int i = 0; i < list.size(); i++) {
             RegionInfo regionInfo = list.get(i);
 
@@ -90,6 +91,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             double long2 = regionInfo.getLong2();
 
             drawCircle(2000 * sick.length(), new LatLng(lat1, long2), regionInfo.getColorZone());
+            System.out.println("Region info " + regionInfo.getColorZone());
+            System.out.println("GREEN " + Color.GREEN);
+            System.out.println("RED " + Color.RED);
+            System.out.println("YELLOW " + Color.YELLOW);
         }
 
     }

@@ -115,5 +115,21 @@ public class RegionInfo {
         this.colorZone = colorZone;
     }
 
-
+    @Override
+    public String toString() {
+        return "RegionInfo{" +
+                "id=" + id +
+                ", regionName='" + regionName + '\'' +
+                ", sick=" + sick +
+                ", hospitalized=" + hospitalized +
+                ", dead=" + dead +
+                ", recovered=" + recovered +
+                ", vaccinated=" + vaccinated +
+                ", testedPCR=" + testedPCR +
+                ", testedIFA=" + testedIFA +
+                ", lat1=" + lat1 +
+                ", long2=" + long2 +
+                ", colorZone=" + colorZone +
+                '}';
+    }
 }

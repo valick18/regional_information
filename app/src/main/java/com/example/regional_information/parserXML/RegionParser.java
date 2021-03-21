@@ -1,6 +1,7 @@
 package com.example.regional_information.parserXML;
 
-import com.example.regional_information.R;
+import android.graphics.Color;
+
 import com.example.regional_information.RegionInfo;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -68,13 +69,13 @@ public class RegionParser {
                                 int color = 0;
                                 switch (textValue) {
                                     case "green":
-                                        color = R.color.green;
+                                        color = Color.GREEN;
                                         break;
                                     case "red":
-                                        color = R.color.red;
+                                        color = Color.RED;
                                         break;
                                     case "yellow":
-                                        color = R.color.yellow;
+                                        color = Color.YELLOW;
                                         break;
                                 }
                                 regionInfo.setColorZone(color);
