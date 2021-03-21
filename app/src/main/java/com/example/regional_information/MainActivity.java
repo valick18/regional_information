@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
     private List<RegionInfo> listForPeriod;
     private static MainActivity instance;
     private RecyclerView rv;
-    private ReaderExcelFile readerExcelFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         rv = findViewById(R.id.rv);
 
-        readerExcelFile = new ReaderExcelFile("Шлях до файлу");
         instance = this;
 
         createDBs();
@@ -58,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         rv.setLayoutManager(new LinearLayoutManager(this));
         new SetListRegions(SetListRegions.LIST_FOR_DAY).execute();
         new SetListRegions(SetListRegions.LIST_FOR_PERIOD).execute();
+
     }
 
     public List<RegionInfo> getList() {
