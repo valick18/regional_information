@@ -10,28 +10,28 @@ import java.util.ArrayList;
 public class RegionParser {
     private ArrayList<RegionInfo> listRegion;
 
-    public RegionParser(){
+    public RegionParser() {
         listRegion = new ArrayList<>();
     }
 
-    public ArrayList<RegionInfo> getListRegion(){
+    public ArrayList<RegionInfo> getListRegion() {
         return listRegion;
     }
 
-    public boolean parse(XmlPullParser xpp){
+    public boolean parse(XmlPullParser xpp) {
         boolean status = true;
         RegionInfo regionInfo = null;
         boolean inEntry = false;
         String textValue = "";
 
-        try{
+        try {
             int eventType = xpp.getEventType();
-            while(eventType != XmlPullParser.END_DOCUMENT){
+            while (eventType != XmlPullParser.END_DOCUMENT) {
 
                 String tagName = xpp.getName();
-                switch (eventType){
+                switch (eventType) {
                     case XmlPullParser.START_TAG:
-                        if("region".equalsIgnoreCase(tagName)){
+                        if ("region".equalsIgnoreCase(tagName)) {
                             inEntry = true;
                             regionInfo = new RegionInfo();
                         }
@@ -40,33 +40,33 @@ public class RegionParser {
                         textValue = xpp.getText();
                         break;
                     case XmlPullParser.END_TAG:
-                        if(inEntry){
-                            if("region".equalsIgnoreCase(tagName)){
+                        if (inEntry) {
+                            if ("region".equalsIgnoreCase(tagName)) {
                                 listRegion.add(regionInfo);
                                 inEntry = false;
-                            } else if("lat".equalsIgnoreCase(tagName)){
+                            } else if ("lat".equalsIgnoreCase(tagName)) {
                                 regionInfo.setLat1(Double.parseDouble(textValue));
-                            } else if("long".equalsIgnoreCase(tagName)){
+                            } else if ("long".equalsIgnoreCase(tagName)) {
                                 regionInfo.setLong2(Double.parseDouble(textValue));
-                            } else if("name-region".equalsIgnoreCase(tagName)){
+                            } else if ("name-region".equalsIgnoreCase(tagName)) {
                                 regionInfo.setRegionName(textValue);
-                            } else if("sick".equalsIgnoreCase(tagName)){
+                            } else if ("sick".equalsIgnoreCase(tagName)) {
                                 regionInfo.setSick(Integer.parseInt(textValue));
-                            } else if("hospitalized".equalsIgnoreCase(tagName)){
+                            } else if ("hospitalized".equalsIgnoreCase(tagName)) {
                                 regionInfo.setHospitalized(Integer.parseInt(textValue));
-                            }  else if("dead".equalsIgnoreCase(tagName)){
+                            } else if ("dead".equalsIgnoreCase(tagName)) {
                                 regionInfo.setDead(Integer.parseInt(textValue));
-                            } else if("recoverd".equalsIgnoreCase(tagName)){
+                            } else if ("recoverd".equalsIgnoreCase(tagName)) {
                                 regionInfo.setRecovered(Integer.parseInt(textValue));
-                            } else if("vaccinated".equalsIgnoreCase(tagName)){
+                            } else if ("vaccinated".equalsIgnoreCase(tagName)) {
                                 regionInfo.setVaccinated(Integer.parseInt(textValue));
-                            } else if("tested-pcr".equalsIgnoreCase(tagName)){
+                            } else if ("tested-pcr".equalsIgnoreCase(tagName)) {
                                 regionInfo.setTestedPCR(Integer.parseInt(textValue));
-                            } else if("tested-ifa".equalsIgnoreCase(tagName)){
+                            } else if ("tested-ifa".equalsIgnoreCase(tagName)) {
                                 regionInfo.setTestedIFA(Integer.parseInt(textValue));
-                            } else if("color-zone".equalsIgnoreCase(tagName)){
+                            } else if ("color-zone".equalsIgnoreCase(tagName)) {
                                 int color = 0;
-                                switch (textValue){
+                                switch (textValue) {
                                     case "green":
                                         color = R.color.green;
                                         break;
@@ -85,11 +85,10 @@ public class RegionParser {
                 }
                 eventType = xpp.next();
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             status = false;
             e.printStackTrace();
         }
-        return  status;
+        return status;
     }
 }

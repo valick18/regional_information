@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         RegionParser parser = new RegionParser();
         parser.parse(xpp);
         List<RegionInfo> list = parser.getListRegion();
-        fillDB(QueryRegionInDB.DATABASE_FOR_PERIOD,list);
+        fillDB(QueryRegionInDB.DATABASE_FOR_PERIOD, list);
     }
 
     private void fillDB(int typeDB, List<RegionInfo> list) {

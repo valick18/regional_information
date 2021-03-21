@@ -6,7 +6,8 @@ public class Coordinates {
     private double latitude;
     private double longitude;
 
-    public Coordinates(){}
+    public Coordinates() {
+    }
 
     public double getLatitude() {
         return latitude;

@@ -8,19 +8,16 @@ import androidx.room.PrimaryKey;
 public class RegionInfo {
 
     @PrimaryKey(autoGenerate = true)
-   private long id;
-   private String regionName;
-   private int sick;
-
-
-
+    private long id;
+    private String regionName;
+    private int sick;
 
     private int hospitalized;
     private int dead;
     private int recovered;
-   private int vaccinated, testedPCR, testedIFA;
-   private double lat1, long2;
-   private int colorZone;
+    private int vaccinated, testedPCR, testedIFA;
+    private double lat1, long2;
+    private int colorZone;
 
     public long getId() {
         return id;

@@ -67,14 +67,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         XmlPullParser xpp = getResources().getXml(R.xml.iv_frank_coordinates);
         CoordinatesParser parser = new CoordinatesParser();
 
-         parser.parse(xpp);
-         List<Coordinates> coordinatesList = parser.getCoordinatesList();
-         int size = coordinatesList.size();
-            LatLng [] latLngs = new LatLng[size];
-            for(int i = 0; i<size; i++){
-                Coordinates cs = coordinatesList.get(i);
-                latLngs[i] = new LatLng(cs.getLatitude(), cs.getLongitude());
-            }
+        parser.parse(xpp);
+        List<Coordinates> coordinatesList = parser.getCoordinatesList();
+        int size = coordinatesList.size();
+        LatLng[] latLngs = new LatLng[size];
+        for (int i = 0; i < size; i++) {
+            Coordinates cs = coordinatesList.get(i);
+            latLngs[i] = new LatLng(cs.getLatitude(), cs.getLongitude());
+        }
 
         drawPolygon(latLngs);
     }

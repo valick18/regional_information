@@ -16,7 +16,7 @@ public class RegionAdapter extends RecyclerView.Adapter<RegionAdapter.RegionView
 
     private List<RegionInfo> list;
 
-    public RegionAdapter(List<RegionInfo> list){
+    public RegionAdapter(List<RegionInfo> list) {
         this.list = list;
     }
 
@@ -31,10 +31,10 @@ public class RegionAdapter extends RecyclerView.Adapter<RegionAdapter.RegionView
     public void onBindViewHolder(@NonNull RegionViewHolder holder, int position) {
         Context context = holder.itemView.getContext();
         holder.region.setText(list.get(position).getRegionName());
-        holder.sickForDay.setText(""+list.get(position).getSick());
-        Intent intent = new Intent(context,RegionDetail.class);
-        intent.putExtra("index",position);
-        holder.itemView.setOnClickListener(e->context.startActivity(intent));
+        holder.sickForDay.setText("" + list.get(position).getSick());
+        Intent intent = new Intent(context, RegionDetail.class);
+        intent.putExtra("index", position);
+        holder.itemView.setOnClickListener(e -> context.startActivity(intent));
     }
 
     @Override
@@ -45,6 +45,7 @@ public class RegionAdapter extends RecyclerView.Adapter<RegionAdapter.RegionView
     public class RegionViewHolder extends RecyclerView.ViewHolder {
         TextView region;
         TextView sickForDay;
+
         public RegionViewHolder(@NonNull View itemView) {
             super(itemView);
             region = itemView.findViewById(R.id.tvRegion);
