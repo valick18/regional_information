@@ -55,7 +55,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 .position(point)
                 .title(""+region.getRegionName())
                 .snippet("Померло за добу: " + region.getDead()+
-                        "\n" + "Виздоровіло: "+ region.getRecovered()));
+                        "\n" + "Виздоровіло: "+ region.getRecovered()+"\nЗахворіло: "+region.getSick()));
 
         CustomInfoWindowAdapter adapter = new CustomInfoWindowAdapter(MapActivity.this);
         gMap.setInfoWindowAdapter(adapter);

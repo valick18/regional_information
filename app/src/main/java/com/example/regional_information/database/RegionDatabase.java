@@ -1,8 +1,10 @@
 package com.example.regional_information.database;
 
 
+
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
+
 
 import com.example.regional_information.RegionInfo;
 

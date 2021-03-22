@@ -71,9 +71,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void createDBs() {
-        dbForDay = Room.databaseBuilder(this, RegionDatabase.class, "database").allowMainThreadQueries().fallbackToDestructiveMigration()
+        //addMigration after updating DB (Class MigrationDB have the migration example)
+        dbForDay = Room.databaseBuilder(this, RegionDatabase.class, "database").allowMainThreadQueries()
                 .build();
-        dbForPeriod = Room.databaseBuilder(this, RegionDBForPeriod.class, "DBforPeriod").allowMainThreadQueries().fallbackToDestructiveMigration()
+        dbForPeriod = Room.databaseBuilder(this, RegionDBForPeriod.class, "DBforPeriod").allowMainThreadQueries()
                 .build();
     }
 
