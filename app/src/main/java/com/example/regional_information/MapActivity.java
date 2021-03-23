@@ -44,16 +44,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         List<RegionInfo> list = MainActivity.getInstance().getList();
         CircleOptions circleOptions = new CircleOptions();
         circleOptions.center(point);
-
-        int rad = region.getSick();
-        if(rad < 50){
-            rad = 50;
-        }else{
-            if (rad > 1200){
-                rad = 1200;
-            }
-        }
-        circleOptions.radius((rad + 2400) * 2);
+        circleOptions.radius(findRadius(region.getSick()));
 
         circleOptions.strokeColor(Color.BLACK);
         circleOptions.fillColor(getColorZone(region));
@@ -134,6 +125,18 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
             drawCircle(regionInfo, new LatLng(lat1, long2));
         }
 
+    }
+
+    private int findRadius(int sick){
+      int rad = sick;
+        if(rad < 50){
+            rad = 50;
+        }else{
+            if (rad > 1200){
+                rad = 1200;
+            }
+        }
+        return (rad + 2200) * 2; //was 2400
     }
 
 
