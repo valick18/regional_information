@@ -7,19 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:id="@+id/btMap"
-        android:layout_width="56dp"
-        android:layout_height="63dp"
-        android:layout_marginEnd="44dp"
-        android:layout_marginRight="44dp"
-        android:layout_marginBottom="49dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rv"
-        app:layout_constraintVertical_bias="0.268"
-        app:srcCompat="@drawable/map" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv"
         android:layout_width="0dp"
@@ -31,5 +18,18 @@
         app:layout_constraintTop_toTopOf="parent">
 
     </androidx.recyclerview.widget.RecyclerView>
+
+    <ImageView
+        android:id="@+id/btMap"
+        android:layout_width="56dp"
+        android:layout_height="63dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/map" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
