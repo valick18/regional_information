@@ -44,7 +44,17 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         List<RegionInfo> list = MainActivity.getInstance().getList();
         CircleOptions circleOptions = new CircleOptions();
         circleOptions.center(point);
-        circleOptions.radius(region.getSick());
+
+        int rad = region.getSick();
+        if(rad < 50){
+            rad = 50;
+        }else{
+            if (rad > 1200){
+                rad = 1200;
+            }
+        }
+        circleOptions.radius((rad + 2400) * 2);
+
         circleOptions.strokeColor(Color.BLACK);
         circleOptions.fillColor(getColorZone(region));
         circleOptions.strokeWidth(2);
@@ -64,11 +74,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private int getColorZone(RegionInfo region) {
         int sick = region.getSick();
         int color = 0;
-        if(sick < 1000){
+        if(sick < 100){
          color = Color.GREEN;
-        }else if(sick > 1000 && sick < 3000){
+        }else if(sick < 300){
             color = Color.YELLOW;
-        }else if(sick > 3000){
+        }else if(sick < 700){
+            color = Color.rgb(255,165,0); //Orange
+        }else{
             color = Color.RED;
         }
         return color;

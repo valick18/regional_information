@@ -11,13 +11,13 @@
         android:id="@+id/btMap"
         android:layout_width="56dp"
         android:layout_height="63dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_marginEnd="44dp"
+        android:layout_marginRight="44dp"
         android:layout_marginBottom="49dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rv"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.268"
         app:srcCompat="@drawable/map" />
 
     <androidx.recyclerview.widget.RecyclerView
