@@ -1,10 +1,6 @@
 package com.example.regional_information;
 
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.drawable.Icon;
 import android.os.Bundle;
 
 import androidx.fragment.app.FragmentActivity;
@@ -14,8 +10,6 @@ import com.example.regional_information.parserXML.CoordinatesParser;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -41,15 +35,24 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
 
     private void drawCircle(RegionInfo region, LatLng point) {
+        int radius = findRadius(region.getSick());
         List<RegionInfo> list = MainActivity.getInstance().getList();
         CircleOptions circleOptions = new CircleOptions();
         circleOptions.center(point);
-        circleOptions.radius(findRadius(region.getSick()));
+        circleOptions.radius(radius);
 
         circleOptions.strokeColor(Color.BLACK);
-        circleOptions.fillColor(getColorZone(region));
+        circleOptions.fillColor(Color.BLUE);
         circleOptions.strokeWidth(2);
+
+        CircleOptions innerCircle = new CircleOptions();
+        innerCircle.center(point);
+        innerCircle.radius(3000);
+        innerCircle.fillColor(getInnerColorZone(region));
+        innerCircle.strokeWidth(2);
+
         gMap.addCircle(circleOptions);
+        gMap.addCircle(innerCircle);
 
         gMap.addMarker(new MarkerOptions()
                 .alpha(0)
@@ -62,17 +65,17 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         gMap.setInfoWindowAdapter(adapter);
     }
 
-    private int getColorZone(RegionInfo region) {
-        int sick = region.getSick();
+    private int getInnerColorZone(RegionInfo region) {
+        int vaccinated = region.getVaccinated();
         int color = 0;
-        if(sick < 100){
+        if(vaccinated >= 100){
          color = Color.GREEN;
-        }else if(sick < 300){
+        }else if(vaccinated > 69 && vaccinated<100){
             color = Color.YELLOW;
-        }else if(sick < 700){
-            color = Color.rgb(255,165,0); //Orange
+        }else if(vaccinated > 49 && vaccinated < 70 ){
+            color = Color.rgb(255,180,68);
         }else{
-            color = Color.RED;
+            color = Color.rgb(255,76,91);
         }
         return color;
     }
@@ -136,7 +139,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 rad = 1200;
             }
         }
-        return (rad + 2200) * 2; //was 2400
+        return (rad + 800) * 6;
     }
 
 
