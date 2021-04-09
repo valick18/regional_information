@@ -6,29 +6,29 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.example.regional_information.RegionInfo;
+import com.example.regional_information.Information;
 
 import java.util.List;
 
 @Dao
 public interface DAO {
 
-    @Query("SELECT * FROM RegionInfo")
-    List<RegionInfo> getAll();
+    @Query("SELECT * FROM Information")
+    List<Information> getAll();
 
-    @Query("SELECT * FROM RegionInfo WHERE :id = id")
-    List<RegionInfo> getRegionByID(long id);
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(RegionInfo ... regionsInfo);
+    @Query("SELECT * FROM Information WHERE :id = id")
+    List<Information> getRegionByID(long id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(RegionInfo regionInfo);
+    void insertAll(Information ... regionsInfo);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(Information regionInfo);
 
     @Delete
-    void delete(RegionInfo regionInfo);
+    void delete(Information regionInfo);
 
-    @Query("DELETE FROM RegionInfo where id>=0")
+    @Query("DELETE FROM Information where id>=0")
     void deleteAll();
 
 }

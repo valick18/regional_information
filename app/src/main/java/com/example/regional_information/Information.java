@@ -3,35 +3,51 @@ package com.example.regional_information;
 import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverter;
+import androidx.room.TypeConverters;
 
-@Entity(indices = {@Index(value = {"regionName", "id"}, unique = true)})
-public class RegionInfo {
-
+@Entity(indices = {@Index(value = {"id"}, unique = true)})
+public class Information {
     @PrimaryKey(autoGenerate = true)
-    private long id;
-    private String regionName;
+    private int id;
+    @TypeConverters(RegionCordConverter.class)
+    private RegionCord regionCord;
     private int sick;
-
     private int hospitalized;
     private int dead;
     private int recovered;
-    private int vaccinated, testedPCR, testedIFA;
-    private double lat1, long2;
+    private int vaccinated;
+    private int testedPCR;
+    private int testedIFA;
 
-    public long getId() {
+    public Information(RegionCord regionCord, int sick, int hospitalized, int dead, int recovered, int vaccinated, int testedPCR, int testedIFA) {
+        this.regionCord = regionCord;
+        this.sick = sick;
+        this.hospitalized = hospitalized;
+        this.dead = dead;
+        this.recovered = recovered;
+        this.vaccinated = vaccinated;
+        this.testedPCR = testedPCR;
+        this.testedIFA = testedIFA;
+    }
+
+    public Information() {
+    }
+
+    public RegionCord getRegionCord() {
+        return regionCord;
+    }
+
+    public void setRegionCord(RegionCord regionCord) {
+        this.regionCord = regionCord;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
-    }
-
-    public String getRegionName() {
-        return regionName;
-    }
-
-    public void setRegionName(String regionName) {
-        this.regionName = regionName;
     }
 
     public int getSick() {
@@ -90,27 +106,11 @@ public class RegionInfo {
         this.testedIFA = testedIFA;
     }
 
-    public double getLat1() {
-        return lat1;
-    }
-
-    public void setLat1(double lat1) {
-        this.lat1 = lat1;
-    }
-
-    public double getLong2() {
-        return long2;
-    }
-
-    public void setLong2(double long2) {
-        this.long2 = long2;
-    }
-
     @Override
     public String toString() {
-        return "RegionInfo{" +
+        return "Information{" +
                 "id=" + id +
-                ", regionName='" + regionName + '\'' +
+                ", regionCord=" + regionCord +
                 ", sick=" + sick +
                 ", hospitalized=" + hospitalized +
                 ", dead=" + dead +
@@ -118,8 +118,7 @@ public class RegionInfo {
                 ", vaccinated=" + vaccinated +
                 ", testedPCR=" + testedPCR +
                 ", testedIFA=" + testedIFA +
-                ", lat1=" + lat1 +
-                ", long2=" + long2 +
                 '}';
+
     }
 }

@@ -14,9 +14,9 @@ import java.util.List;
 
 public class RegionAdapter extends RecyclerView.Adapter<RegionAdapter.RegionViewHolder> {
 
-    private List<RegionInfo> list;
+    private List<Information> list;
 
-    public RegionAdapter(List<RegionInfo> list) {
+    public RegionAdapter(List<Information> list) {
         this.list = list;
     }
 
@@ -30,7 +30,7 @@ public class RegionAdapter extends RecyclerView.Adapter<RegionAdapter.RegionView
     @Override
     public void onBindViewHolder(@NonNull RegionViewHolder holder, int position) {
         Context context = holder.itemView.getContext();
-        holder.region.setText(list.get(position).getRegionName());
+        holder.region.setText(list.get(position).getRegionCord().getRegionName());
         holder.sickForDay.setText("" + list.get(position).getSick());
         Intent intent = new Intent(context, RegionDetail.class);
         intent.putExtra("index", position);

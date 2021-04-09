@@ -34,9 +34,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     }
 
 
-    private void drawCircle(RegionInfo region, LatLng point) {
+    private void drawCircle(Information region, LatLng point) {
         int radius = findRadius(region.getSick());
-        List<RegionInfo> list = MainActivity.getInstance().getList();
+        List<Information> list = MainActivity.getInstance().getList();
         CircleOptions circleOptions = new CircleOptions();
         circleOptions.center(point);
         circleOptions.radius(radius);
@@ -57,7 +57,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         gMap.addMarker(new MarkerOptions()
                 .alpha(0)
                 .position(point)
-                .title(""+region.getRegionName())
+                .title(""+region.getRegionCord().getRegionName())
                 .snippet("Померло за добу: " + region.getDead()+
                         "\n" + "Виздоровіло: "+ region.getRecovered()+"\nЗахворіло: "+region.getSick()));
 
@@ -65,7 +65,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         gMap.setInfoWindowAdapter(adapter);
     }
 
-    private int getInnerColorZone(RegionInfo region) {
+    private int getInnerColorZone(Information region) {
         int vaccinated = region.getVaccinated();
         int color = 0;
         if(vaccinated >= 100){
@@ -118,12 +118,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     }
 
     private void drawAllElements() {
-        List<RegionInfo> list = MainActivity.getInstance().getList();
+        List<Information> list = MainActivity.getInstance().getList();
         for (int i = 0; i < list.size(); i++) {
-            RegionInfo regionInfo = list.get(i);
+            Information regionInfo = list.get(i);
 
-            double lat1 = regionInfo.getLat1();
-            double long2 = regionInfo.getLong2();
+            double lat1 = regionInfo.getRegionCord().getLat1();
+            double long2 = regionInfo.getRegionCord().getLong2();
 
             drawCircle(regionInfo, new LatLng(lat1, long2));
         }

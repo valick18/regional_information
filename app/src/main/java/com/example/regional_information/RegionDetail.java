@@ -14,8 +14,8 @@ import java.util.List;
 
 public class RegionDetail extends ListActivity {
 
-    private RegionInfo region;
-    private RegionInfo regionInfoFP;
+    private Information region;
+    private Information regionInfoFP;
     private ArrayList<RegionInfoMap> list;
 
     public void onCreate(Bundle savedBundle) {
@@ -38,7 +38,7 @@ public class RegionDetail extends ListActivity {
 
     private void initList() {
         list = new ArrayList<>();
-        list.add(new RegionInfoMap("", region.getRegionName(), ""));
+        list.add(new RegionInfoMap("", region.getRegionCord().getRegionName(), ""));
         list.add(new RegionInfoMap("", "За добу", "За період"));
         list.add(new RegionInfoMap("Захворіло", "" + region.getSick(), "" + regionInfoFP.getSick()));
         list.add(new RegionInfoMap("Шпиталізовано", "" + region.getHospitalized(), "" + regionInfoFP.getHospitalized()));

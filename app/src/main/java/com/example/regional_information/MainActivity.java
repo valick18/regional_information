@@ -14,15 +14,16 @@ import androidx.room.Room;
 import com.example.regional_information.database.DAO;
 import com.example.regional_information.database.RegionDBForPeriod;
 import com.example.regional_information.database.RegionDatabase;
-import com.example.regional_information.parserXML.Coordinates;
-import com.example.regional_information.parserXML.CoordinatesParser;
-import com.example.regional_information.parserXML.RegionParser;
-import com.google.android.gms.maps.model.LatLng;
 
-import org.xmlpull.v1.XmlPullParser;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+import java.util.Properties;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,11 +32,14 @@ public class MainActivity extends AppCompatActivity {
     private DAO daoForPeriod;
     private RegionDBForPeriod dbForPeriod;
     private ImageView btMap;
+    private Properties property;
 
-    private List<RegionInfo> list;
-    private List<RegionInfo> listForPeriod;
+    private List<Information> list;
+    private List<Information> listForPeriod;
     private static MainActivity instance;
     private RecyclerView rv;
+    private static RestTemplate restTemplate;
+    private String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
 
         btMap = findViewById(R.id.btMap);
         btMap.setOnClickListener(e -> startActivity(new Intent(getApplicationContext(), MapActivity.class)));
+
+        url = getPropertyURL();
 
         daoForDay = dbForDay.RegionDAO();
         daoForPeriod = dbForPeriod.RegionDAO();
@@ -65,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public List<RegionInfo> getList() {
+    public List<Information> getList() {
         return list;
     }
 
@@ -87,26 +93,38 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createRegions() {
-        XmlPullParser xpp = getResources().getXml(R.xml.regiones);
-        RegionParser parser = new RegionParser();
-        parser.parse(xpp);
-        List<RegionInfo> list = parser.getListRegion();
-
+        List<Information> list = getAllRegions(url);
         fillDB(QueryRegionInDB.DATABASE_FOR_DAY, list);
     }
 
-
-    private void createRegionsInfoForPeriod() {
-        XmlPullParser xpp = getResources().getXml(R.xml.regiones_info_for_period);
-        RegionParser parser = new RegionParser();
-        parser.parse(xpp);
-        List<RegionInfo> list = parser.getListRegion();
-        fillDB(QueryRegionInDB.DATABASE_FOR_PERIOD, list);
+    private String getPropertyURL(){
+        try {
+            InputStream io = getApplicationContext().getAssets().open("my.properties");
+            property = new Properties();
+            property.load(io);
+              return property.getProperty("url");
+           }catch (IOException exp){
+           exp.getStackTrace();
+        }
+        return "Not found";
     }
 
-    private void fillDB(int typeDB, List<RegionInfo> list) {
+
+    private void createRegionsInfoForPeriod(){
+            List<Information> list = getAllRegions(url);
+            fillDB(QueryRegionInDB.DATABASE_FOR_PERIOD, list);
+    }
+
+    public static List<Information> getAllRegions(String URL){
+        ResponseEntity<List<Information>> responseEntity = restTemplate.exchange(URL, HttpMethod.GET,
+                null, new ParameterizedTypeReference<List<Information>>() {});
+        List<Information> allRegions = responseEntity.getBody();
+        return allRegions;
+    }
+
+    private void fillDB(int typeDB, List<Information> list) {
         if (list.size() > 0) {
-            for (RegionInfo r : list) {
+            for (Information r : list) {
                 new QueryRegionInDB(typeDB).execute(r);
             }
         }
@@ -120,11 +138,11 @@ public class MainActivity extends AppCompatActivity {
         return daoForPeriod;
     }
 
-    public List<RegionInfo> getListForPeriod() {
+    public List<Information> getListForPeriod() {
         return listForPeriod;
     }
 
-    private class QueryRegionInDB extends AsyncTask<RegionInfo, Void, Void> {
+    private class QueryRegionInDB extends AsyncTask<Information, Void, Void> {
 
         public static final int DATABASE_FOR_DAY = 0, DATABASE_FOR_PERIOD = 1;
         private int typeDB;
@@ -134,8 +152,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected Void doInBackground(RegionInfo... regions) {
-            RegionInfo region = regions[0];
+        protected Void doInBackground(Information ... regions) {
+            Information region = regions[0];
             if (typeDB == DATABASE_FOR_DAY)
                 daoForDay.insert(region);
             else if (typeDB == DATABASE_FOR_PERIOD)
