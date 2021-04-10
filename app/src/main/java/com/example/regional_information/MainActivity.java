@@ -4,6 +4,7 @@ package com.example.regional_information;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,19 +12,25 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import com.example.regional_information.API.ServerAPI;
 import com.example.regional_information.database.DAO;
 import com.example.regional_information.database.RegionDBForPeriod;
 import com.example.regional_information.database.RegionDatabase;
 
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
-
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 import java.util.Properties;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,8 +45,8 @@ public class MainActivity extends AppCompatActivity {
     private List<Information> listForPeriod;
     private static MainActivity instance;
     private RecyclerView rv;
-    private static RestTemplate restTemplate;
-    private String url;
+    private ServerAPI serverAPI;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,21 +56,22 @@ public class MainActivity extends AppCompatActivity {
 
         instance = this;
 
+        serverAPI = createServerAPI();
+
         createDBs();
 
         btMap = findViewById(R.id.btMap);
         btMap.setOnClickListener(e -> startActivity(new Intent(getApplicationContext(), MapActivity.class)));
 
-        url = getPropertyURL();
 
         daoForDay = dbForDay.RegionDAO();
         daoForPeriod = dbForPeriod.RegionDAO();
 
         if (daoForDay.getAll().size() == 0)
-            createRegions();
+            createRegions(QueryRegionInDB.DATABASE_FOR_DAY);
 
         if (daoForPeriod.getAll().size() == 0)
-            createRegionsInfoForPeriod();
+            createRegions(QueryRegionInDB.DATABASE_FOR_PERIOD);
 
         rv.setLayoutManager(new LinearLayoutManager(this));
         new SetListRegions(SetListRegions.LIST_FOR_DAY).execute();
@@ -92,11 +100,6 @@ public class MainActivity extends AppCompatActivity {
         return dbForDay;
     }
 
-    private void createRegions() {
-        List<Information> list = getAllRegions(url);
-        fillDB(QueryRegionInDB.DATABASE_FOR_DAY, list);
-    }
-
     private String getPropertyURL(){
         try {
             InputStream io = getApplicationContext().getAssets().open("my.properties");
@@ -109,20 +112,41 @@ public class MainActivity extends AppCompatActivity {
         return "Not found";
     }
 
+    private void createRegions(int selectDB){
+        Call<List<Information>> infos = serverAPI.getInfoList();
+        infos.enqueue(new Callback<List<Information>>() {
+            @Override
+            public void onResponse(Call<List<Information>> call, Response<List<Information>> response) {
+                if (response.isSuccessful()) {
+                    Log.d("response ", "" + response.body().size());
+                    fillDB(selectDB, response.body());
+                } else {
+                    Log.d("response code ", ""+response.code());
+                }
+            }
 
-    private void createRegionsInfoForPeriod(){
-            List<Information> list = getAllRegions(url);
-            fillDB(QueryRegionInDB.DATABASE_FOR_PERIOD, list);
+            @Override
+            public void onFailure(Call<List<Information>> call, Throwable t) {
+                Log.d("failure ", t.getMessage());
+            }
+
+
+        });
+
     }
 
-    public static List<Information> getAllRegions(String URL){
-        ResponseEntity<List<Information>> responseEntity = restTemplate.exchange(URL, HttpMethod.GET,
-                null, new ParameterizedTypeReference<List<Information>>() {});
-        List<Information> allRegions = responseEntity.getBody();
-        return allRegions;
+
+    private ServerAPI createServerAPI(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(getPropertyURL())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        return retrofit.create(ServerAPI.class);
     }
+
 
     private void fillDB(int typeDB, List<Information> list) {
+
         if (list.size() > 0) {
             for (Information r : list) {
                 new QueryRegionInDB(typeDB).execute(r);
@@ -173,8 +197,10 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            if (typeList == LIST_FOR_DAY)
+            if (typeList == LIST_FOR_DAY) {
                 list = daoForDay.getAll();
+               Log.d("List",daoForDay.getAll().toString());
+            }
             else if (typeList == LIST_FOR_PERIOD)
                 listForPeriod = daoForPeriod.getAll();
             return null;
