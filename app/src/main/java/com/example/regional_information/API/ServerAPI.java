@@ -19,4 +19,7 @@ public interface ServerAPI {
     @POST("createInformation")
     void createInfoReg(Information regInfo);
 
+    @GET("informationforperiod")
+    Call<List<Information>> getListForPeriod();
+
 }

@@ -68,10 +68,10 @@ public class MainActivity extends AppCompatActivity {
         daoForPeriod = dbForPeriod.RegionDAO();
 
         if (daoForDay.getAll().size() == 0)
-            createRegions(QueryRegionInDB.DATABASE_FOR_DAY);
+            createRegions(QueryRegionInDB.DATABASE_FOR_DAY, serverAPI.getInfoList());
 
         if (daoForPeriod.getAll().size() == 0)
-            createRegions(QueryRegionInDB.DATABASE_FOR_PERIOD);
+            createRegions(QueryRegionInDB.DATABASE_FOR_PERIOD, serverAPI.getListForPeriod());
 
         rv.setLayoutManager(new LinearLayoutManager(this));
         new SetListRegions(SetListRegions.LIST_FOR_DAY).execute();
@@ -112,8 +112,8 @@ public class MainActivity extends AppCompatActivity {
         return "Not found";
     }
 
-    private void createRegions(int selectDB){
-        Call<List<Information>> infos = serverAPI.getInfoList();
+    private void createRegions(int selectDB, Call<List<Information>> list){
+        Call<List<Information>> infos = list;
         infos.enqueue(new Callback<List<Information>>() {
             @Override
             public void onResponse(Call<List<Information>> call, Response<List<Information>> response) {
