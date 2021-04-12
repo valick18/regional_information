@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,12 +18,8 @@ import com.example.regional_information.database.DAO;
 import com.example.regional_information.database.RegionDBForPeriod;
 import com.example.regional_information.database.RegionDatabase;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.List;
 import java.util.Properties;
 
@@ -46,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private static MainActivity instance;
     private RecyclerView rv;
     private ServerAPI serverAPI;
+    private RegionAdapter regionAdapter;
 
 
     @Override
@@ -63,20 +61,29 @@ public class MainActivity extends AppCompatActivity {
         btMap = findViewById(R.id.btMap);
         btMap.setOnClickListener(e -> startActivity(new Intent(getApplicationContext(), MapActivity.class)));
 
-
         daoForDay = dbForDay.RegionDAO();
         daoForPeriod = dbForPeriod.RegionDAO();
 
-        if (daoForDay.getAll().size() == 0)
+        if(daoForDay.getAll().size() == 0)
             createRegions(QueryRegionInDB.DATABASE_FOR_DAY, serverAPI.getInfoList());
-
-        if (daoForPeriod.getAll().size() == 0)
+        if(daoForPeriod.getAll().size() == 0)
             createRegions(QueryRegionInDB.DATABASE_FOR_PERIOD, serverAPI.getListForPeriod());
 
+        initializeList();
+
+        Button btUpdate = findViewById(R.id.btUpdate);
+        btUpdate.setOnClickListener(e->{
+                createRegions(QueryRegionInDB.DATABASE_FOR_DAY, serverAPI.getInfoList());
+                createRegions(QueryRegionInDB.DATABASE_FOR_PERIOD, serverAPI.getListForPeriod());
+            initializeList();
+        });
+
+    }
+
+    private void initializeList(){
         rv.setLayoutManager(new LinearLayoutManager(this));
         new SetListRegions(SetListRegions.LIST_FOR_DAY).execute();
         new SetListRegions(SetListRegions.LIST_FOR_PERIOD).execute();
-
     }
 
     public List<Information> getList() {
@@ -167,7 +174,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private class QueryRegionInDB extends AsyncTask<Information, Void, Void> {
-
         public static final int DATABASE_FOR_DAY = 0, DATABASE_FOR_PERIOD = 1;
         private int typeDB;
 
@@ -176,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected Void doInBackground(Information ... regions) {
+        protected Void doInBackground(Information... regions) {
             Information region = regions[0];
             if (typeDB == DATABASE_FOR_DAY)
                 daoForDay.insert(region);
@@ -187,7 +193,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private class SetListRegions extends AsyncTask<Void, Void, Void> {
-
         public static final int LIST_FOR_DAY = 0, LIST_FOR_PERIOD = 1;
         private int typeList;
 
@@ -210,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             if (typeList == LIST_FOR_DAY) {
-                RegionAdapter regionAdapter = new RegionAdapter(list);
+                regionAdapter = new RegionAdapter(list);
                 rv.setAdapter(regionAdapter);
             }
         }
